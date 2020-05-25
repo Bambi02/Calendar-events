@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do list</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c01160d7ea.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="menu">
+        <i class="fas fa-times"></i>
+    </div>
+
+    <div class="top">
+        <nav>
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div class="day">
+                <p>Today</p>
+            </div>
+            <div class="alert">
+                <i class="fas fa-bell"></i>
+            </div>
+        </nav>
+        <div class="info">
+            <div class="time">
+            </div>
+            <div class="date">
+            </div>
+        </div>
+        
+        <div class="add_window">
+            
+            <input type="text" id="name" class="input" placeholder="Name of event">
+            <input type="text" id="desc" class="input" placeholder="Description">
+            <input type="text" id="time" class="input" placeholder="Time of event">
+            <button class="confirm add_event">Add</button>
+            <button class="confirm modify_event">Edit</button>
+        </div>
+    </div>
+
+    <button class="add">
+        Add activity 
+    </button>
+
+    <div class="bottom">
+        <div class="event">
+            <div class="left_bar"></div>
+            <div class="description">
+                <div class="event_title"><p>Meeting with</p></div>
+                <div class="event_description"><p>Ray Johnson</p></div>
+                <div class="event_time"><p>10:00</p></div>
+            </div>
+            <div class="icons">
+                <i class="fas fa-edit"></i>
+                <i class="fas fa-ban"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script> 
+
+</body>
+</html>
