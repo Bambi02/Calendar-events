@@ -150,41 +150,42 @@ function editWindow (element){
       document.querySelector("#desc").value = "";
       document.querySelector("#time").value = "";
   }   
-}  
+} 
+
+
+//variable for storing selected edit buttons div
+var eventSelector;
 
 //delete/edit event button
 function modifyEvent(event) {
-  const descSelector =  event.target.parentElement.previousElementSibling.firstElementChild;
   const div2 = document.createElement("div");
-  let counter = 0;
   //delete event
   if(event.target.classList.contains("fa-ban")){
     event.target.parentElement.parentElement.remove();
-    //edit event
+    //open edit event window
   }else if(event.target.classList.contains("fa-edit")) { 
     editWindow(event.target.parentElement)
-  } 
-
-  modifyTodo = () => {
-    descSelector.innerText = document.querySelector("#name").value;
-    descSelector.nextElementSibling.innerText = document.querySelector("#desc").value;
-    descSelector.nextElementSibling.nextElementSibling.innerText = document.querySelector("#time").value;
-
-    console.log(event.target);
-    console.log(event.target.parentElement);
-    console.log(event.target.parentElement.previousElementSibling);
-    console.log(event.target.parentElement.previousElementSibling.firstElementChild);
-    counter ++;
-    console.log(counter)
-
-    div2.className = "message message_confirm";
-    div2.innerText = "Udalosť upravená";
-    document.querySelector(".add_window").insertBefore(div2, document.querySelector("#name"));
-    setTimeout(function(){div2.remove()}, 2000);
+    //store selected event div (first child) as variable
+    eventSelector = event.target.parentElement.previousElementSibling.firstElementChild;
   }
-
-  document.querySelector(".modify_event").addEventListener("click", modifyTodo);
 }
 
-document.querySelector(".bottom").addEventListener("click", modifyEvent);
 
+//modiyfy selected event
+modifyTodo = () => {
+  const div2 = document.createElement("div");
+  //load selected event div and replace with input fields value
+  eventSelector.innerText = document.querySelector("#name").value;
+  eventSelector.nextElementSibling.innerText = document.querySelector("#desc").value;
+  eventSelector.nextElementSibling.nextElementSibling.innerText = document.querySelector("#time").value;
+
+  //confirmation notification
+  div2.className = "message message_confirm";
+  div2.innerText = "Udalosť upravená";
+  document.querySelector(".add_window").insertBefore(div2, document.querySelector("#name"));
+  setTimeout(function(){div2.remove()}, 2000);
+}
+
+document.querySelector(".modify_event").addEventListener("click", modifyTodo);
+
+document.querySelector(".bottom").addEventListener("click", modifyEvent);
