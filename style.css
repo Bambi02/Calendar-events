@@ -34,11 +34,6 @@ nav{
     box-sizing: border-box;
 }
 
-.day{
-    font-size: 20px;
-    font-weight: 500;
-    font-weight: bold;
-}
 
 .hamburger{
     height: 15px;
@@ -74,10 +69,73 @@ nav{
     text-shadow: 2px 2px 2px black;
 }
 
+/*---------------CALENDAR--------------*/
+
 .date{
     color: white;
     text-shadow: 2px 2px 2px black;
     font-weight: bolder;
+}
+
+.day{
+    font-size: 20px;
+    font-weight: 500;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    text-align: center;
+    position: relative;
+
+}
+
+.selected-day{
+    padding: 10px 0;
+    cursor: pointer;
+
+}
+
+.month{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-image: linear-gradient(to right, rgba(233, 198, 1, 0.959), rgb(185, 158, 0));
+    border-bottom: 2px solid rgb(185, 158, 0);
+}
+
+.days{
+    background-color: rgb(255, 255, 255);
+    height: 180px;
+    padding: 5px 5px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-gap: 3px;
+}
+
+.calendar_day{
+    display: flex;
+    justify-content: center;
+    background-color: rgba(245, 245, 245, 0.76);
+    align-items: center;
+    border: 2px solid rgb(185, 158, 0);
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.picked_day{
+    background-image: linear-gradient(to right, rgb(0, 199, 123), rgb(0, 150, 92));
+}
+
+.date-picker{
+    position: absolute;
+    width: 100%;
+    top: 43px;
+    display: none;
+}
+
+.prev-month, .next-month{
+    cursor: pointer;
 }
 
 /*-------- ADD BUTTON -----------*/
