@@ -193,17 +193,17 @@ function createTodo () {
     setTimeout(function(){div.remove()}, 2000);
   }else{
     //create local storage array if empty + push
-    if(localStorage.getItem("events") === null){
+    if(localStorage.getItem(aktualnyDatum) === null){
       let storedEvents = [];
       storedEvents.push(eventObj);
-      localStorage.setItem("events", JSON.stringify(storedEvents));
+      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
     //or modify existing array of events
     }else{
-      let storedEvents = JSON.parse(localStorage.getItem("events"));
+      let storedEvents = JSON.parse(localStorage.getItem(aktualnyDatum));
       storedEvents.push(eventObj);
       //sort by time
       storedEvents.sort((a, b) => a.time - b.time);
-      localStorage.setItem("events", JSON.stringify(storedEvents));
+      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
     }
 
     //push new/modified array of events to dom
@@ -224,7 +224,7 @@ function createTodo () {
 
 //push local storage data to dom
 function fetchEvents () {
-  let storedEvents = JSON.parse(localStorage.getItem("events"));
+  let storedEvents = JSON.parse(localStorage.getItem(aktualnyDatum));
 
   bottom.innerHTML = "";
 
@@ -268,13 +268,13 @@ function deleteFromStorage (event) {
   const time1 = event.target.parentElement.previousElementSibling.firstElementChild.nextElementSibling.nextElementSibling.innerText;
   //HHMM time format for comparing
   const time = time1.slice(0, 2)+time1.slice(3, time1.length);
-  let storedEvents = JSON.parse(localStorage.getItem("events"));
+  let storedEvents = JSON.parse(localStorage.getItem(aktualnyDatum));
 
   //remove matching events from dom and local storage
   for (let i = 0; i<storedEvents.length; i++) {
     if (name === storedEvents[i].name && desc === storedEvents[i].description && time === storedEvents[i].time){
       storedEvents.splice([i], 1);
-      localStorage.setItem("events", JSON.stringify(storedEvents));
+      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
     }
   }
 }
@@ -300,7 +300,7 @@ function modifyStorage (eventSelector) {
     time:eventTime
   };
 
-  let storedEvents = JSON.parse(localStorage.getItem("events"));
+  let storedEvents = JSON.parse(localStorage.getItem(aktualnyDatum));
 
   for (let i = 0; i<storedEvents.length; i++) {
     //if local storage and dom event value match
@@ -308,7 +308,7 @@ function modifyStorage (eventSelector) {
       //replace existing with modified
       storedEvents.splice([i], 1, eventObj );
       storedEvents.sort((a, b) => a.time - b.time);
-      localStorage.setItem("events", JSON.stringify(storedEvents));
+      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
       //replace existing dom with modified events from local storage
       fetchEvents();
 
@@ -362,6 +362,7 @@ function zvolDen (day, element){
     vytvorAktualnyDatum();
     getPocetDni();
     aktualizujZobrazenyDatum();
+    fetchEvents();
   }
 }
 
