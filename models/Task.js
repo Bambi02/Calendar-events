@@ -10,9 +10,9 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  day: Number,
-  month: Number,
-  year: Number,
+  day: String,
+  month: String,
+  year: String,
 });
 
 module.exports = mongoose.model('Task', TaskSchema);
