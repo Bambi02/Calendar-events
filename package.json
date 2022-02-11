@@ -1,0 +1,28 @@
+{
+  "name": "calendar-events",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bambi02/Calendar-events.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bambi02/Calendar-events/issues"
+  },
+  "homepage": "https://github.com/Bambi02/Calendar-events#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
