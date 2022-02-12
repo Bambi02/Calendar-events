@@ -1,5 +1,3 @@
-//import axios from '../axios';
-
 const cas = document.querySelector('.time');
 const bottom = document.querySelector('.bottom');
 const addWindow = document.querySelector('.add_window');
@@ -69,7 +67,7 @@ document.querySelector('.add_event').addEventListener('click', createTodo);
 //delete or process to edit selected event
 document.querySelector('.bottom').addEventListener('click', modifyEvent);
 // edit selected event
-document.querySelector('.modify_event').addEventListener('click', modifyTodo);
+document.querySelector('.modify_event').addEventListener('click', modifyTask);
 //toggle calendar dropdown
 selectedDay.addEventListener('click', calendarToggle);
 
@@ -166,6 +164,8 @@ function activityWindow() {
 
 //slide in window for editing events
 function editWindow(element) {
+  const taskID = element.parentElement.id
+  addWindow.id = taskID
   if (counter % 2 == 0) {
     addWindow.style.transform = 'translateY(0)';
     addWindow.style.zIndex = '1';
@@ -178,8 +178,6 @@ function editWindow(element) {
       element.previousElementSibling.firstElementChild.innerText;
     document.querySelector('#desc').value =
       element.previousElementSibling.firstElementChild.nextElementSibling.innerText;
-    document.querySelector('#time').value =
-      element.previousElementSibling.firstElementChild.nextElementSibling.nextElementSibling.innerText;
     counter++;
     //slide out
   } else if (counter % 2 != 0) {
@@ -201,16 +199,18 @@ function editWindow(element) {
 function createTodo() {
   let eventName = document.querySelector('#name').value;
   let eventDesc = document.querySelector('#desc').value;
-  let eventTime = document.querySelector('#time').value;
   const div = document.createElement('div');
+  const month = zvolenyMesiac + 1;
   const eventObj = {
     name: eventName,
     description: eventDesc,
-    time: eventTime,
+    day: zvolenyDen,
+    month: month,
+    year: zvolenyRok,
   };
 
   //error if empty input field
-  if (eventName == '' || eventDesc == '' || eventTime == '') {
+  if (eventName == '' || eventDesc == '') {
     div.className = 'message message_error';
     div.innerText = 'Prosim vyplňte všetky údaje';
     document
@@ -220,20 +220,7 @@ function createTodo() {
       div.remove();
     }, 2000);
   } else {
-    //create local storage array if empty + push
-    if (localStorage.getItem(aktualnyDatum) === null) {
-      let storedEvents = [];
-      storedEvents.push(eventObj);
-      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
-      //or modify existing array of events
-    } else {
-      let storedEvents = JSON.parse(localStorage.getItem(aktualnyDatum));
-      storedEvents.push(eventObj);
-      //sort by time
-      storedEvents.sort((a, b) => a.time - b.time);
-      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
-    }
-
+    axios.post('/api/v1/tasks', eventObj)
     //push new/modified array of events to dom
     fetchEvents();
 
@@ -249,7 +236,6 @@ function createTodo() {
     //clear input fields
     document.querySelector('#name').value = '';
     document.querySelector('#desc').value = '';
-    document.querySelector('#time').value = '';
   }
 }
 
@@ -259,7 +245,7 @@ async function fetchEvents() {
 
   data.forEach((task) => {
     if (task.day + task.month + task.year == aktualnyDatum) {
-        bottom.innerHTML += `<div class="event">
+        bottom.innerHTML += `<div class="event" id=${task._id}>
                         <div class="left_bar"></div>
                         <div class="description">
                         <div class="event_title"><p>${task.name}</p></div>
@@ -278,98 +264,49 @@ async function fetchEvents() {
 function modifyEvent(event) {
   //delete event
   if (event.target.classList.contains('fa-ban')) {
-    event.target.parentElement.parentElement.remove();
-    deleteFromStorage(event);
+    deleteTask(event);
     //open edit event window
   } else if (event.target.classList.contains('fa-edit')) {
     editWindow(event.target.parentElement);
-    //store selected event div (first child) as variable
-    eventSelector =
-      event.target.parentElement.previousElementSibling.firstElementChild;
   }
 }
 
 //remove event from local storage
-function deleteFromStorage(event) {
-  const name =
-    event.target.parentElement.previousElementSibling.firstElementChild
-      .innerText;
-  const desc =
-    event.target.parentElement.previousElementSibling.firstElementChild
-      .nextElementSibling.innerText;
-  //time in dom format HH:MM
-  const time1 =
-    event.target.parentElement.previousElementSibling.firstElementChild
-      .nextElementSibling.nextElementSibling.innerText;
-  //HHMM time format for comparing
-  const time = time1.slice(0, 2) + time1.slice(3, time1.length);
-  let storedEvents = JSON.parse(localStorage.getItem(aktualnyDatum));
+function deleteTask(event) {
+  const taskID =
+    event.target.parentElement.parentElement.id;
 
-  //remove matching events from dom and local storage
-  for (let i = 0; i < storedEvents.length; i++) {
-    if (
-      name === storedEvents[i].name &&
-      desc === storedEvents[i].description &&
-      time === storedEvents[i].time
-    ) {
-      storedEvents.splice([i], 1);
-      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
-    }
-  }
+    axios.delete(`/api/v1/tasks/${taskID}`)
+    fetchEvents()
 }
 
 //edit event on storage + push to dom
-function modifyStorage(eventSelector) {
-  const name = eventSelector.innerText;
-  const desc = eventSelector.nextElementSibling.innerText;
+function modifyTask(event) {
   const div = document.createElement('div');
-  //time in dom format HH:MM
-  const time1 = eventSelector.nextElementSibling.nextElementSibling.innerText;
-  //HHMM time format for comparing
-  const time = time1.slice(0, 2) + time1.slice(3, time1.length);
+  const taskID =
+  event.target.parentElement.id
 
   let eventName = document.querySelector('#name').value;
   let eventDesc = document.querySelector('#desc').value;
-  let eventTime = document.querySelector('#time').value;
 
   const eventObj = {
     name: eventName,
     description: eventDesc,
-    time: eventTime,
   };
 
-  let storedEvents = JSON.parse(localStorage.getItem(aktualnyDatum));
+  axios.patch(`/api/v1/tasks/${taskID}`, eventObj)
 
-  for (let i = 0; i < storedEvents.length; i++) {
-    //if local storage and dom event value match
-    if (
-      name === storedEvents[i].name &&
-      desc === storedEvents[i].description &&
-      time === storedEvents[i].time
-    ) {
-      //replace existing with modified
-      storedEvents.splice([i], 1, eventObj);
-      storedEvents.sort((a, b) => a.time - b.time);
-      localStorage.setItem(aktualnyDatum, JSON.stringify(storedEvents));
-      //replace existing dom with modified events from local storage
-      fetchEvents();
+        //confirmation notification
+        div.className = 'message message_confirm';
+        div.innerText = 'Udalosť upravená';
+        document
+          .querySelector('.add_window')
+          .insertBefore(div, document.querySelector('#name'));
+        setTimeout(function () {
+          div.remove();
+        }, 2000)
 
-      //confirmation notification
-      div.className = 'message message_confirm';
-      div.innerText = 'Udalosť upravená';
-      document
-        .querySelector('.add_window')
-        .insertBefore(div, document.querySelector('#name'));
-      setTimeout(function () {
-        div.remove();
-      }, 2000);
-    }
-  }
-}
-
-//pass variable for recognision of clicked element to modifystorage()
-function modifyTodo() {
-  modifyStorage(eventSelector);
+        fetchEvents();
 }
 
 //--------------------------- CALENDAR -------------------------
