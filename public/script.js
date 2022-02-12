@@ -51,8 +51,7 @@ let novyDatum =
   (zvolenyMesiac + 1).toString() +
   zvolenyRok.toString();
 
-window.onload = fetchEvents2();
-console.log(aktualnyDatum);
+window.onload = fetchEvents();
 
 getPocetDni();
 aktualizujZobrazenyDatum();
@@ -254,51 +253,23 @@ function createTodo() {
   }
 }
 
-//push local storage data to dom
 async function fetchEvents() {
   const data = await axios.get('/api/v1/tasks').then((res) => res.data.tasks);
-  const dateKey = data.day + data.month + data.year;
-
-  console.log(data[0].day);
-
-  bottom.innerHTML = '';
-
-  data.forEach((event) => {
-    bottom.innerHTML += `<div class="event">
-                    <div class="left_bar"></div>
-                    <div class="description">
-                    <div class="event_title"><p>${event.name}</p></div>
-                    <div class="event_description"><p>${event.description}</p></div>
-                    </div>
-                    <div class="icons">
-                        <i class="fas fa-edit"></i>
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    </div>`;
-  });
-}
-
-async function fetchEvents2() {
-  const data = await axios.get('/api/v1/tasks').then((res) => res.data.tasks);
+  bottom.innerHTML = ''
 
   data.forEach((task) => {
-    console.log(task.day + task.month + task.year);
     if (task.day + task.month + task.year == aktualnyDatum) {
-      bottom.innerHTML = '';
-
-      data.forEach((event) => {
         bottom.innerHTML += `<div class="event">
                         <div class="left_bar"></div>
                         <div class="description">
-                        <div class="event_title"><p>${event.name}</p></div>
-                        <div class="event_description"><p>${event.description}</p></div>
+                        <div class="event_title"><p>${task.name}</p></div>
+                        <div class="event_description"><p>${task.description}</p></div>
                         </div>
                         <div class="icons">
                             <i class="fas fa-edit"></i>
                             <i class="fas fa-ban"></i>
                         </div>
                         </div>`;
-      });
     }
   });
 }
@@ -435,7 +406,7 @@ function zvolDen(day, element) {
     vytvorAktualnyDatum();
     getPocetDni();
     aktualizujZobrazenyDatum();
-    fetchEvents2();
+    fetchEvents();
   }
 }
 
@@ -477,4 +448,4 @@ function aktualizujZobrazenyDatum() {
     selectedDay.innerText = `${zvolenyDen}.${zvolenyMesiac + 1}.${zvolenyRok} `;
   }
 }
-console.log();
+
