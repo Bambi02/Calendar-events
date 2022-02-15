@@ -15,19 +15,20 @@ const addTask = asyncWrapper(async (req, res) => {
 
 const getSingleTask = asyncWrapper(async (req, res, next) => {
 	const id = req.params.id;
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return res
+			.status(500)
+			.json({ msg: 'Something went wrong, tray again later' });
+	}
+
 	const task = await Task.findById(id);
-	//const task = await Task.findById(id);
 
 	if (!task) {
 		return next(createCustomError(`there is no item with id: ${id}`, 404));
 	}
 
 	res.status(200).json({ task });
-
-	console.log(mongoose.Types.ObjectId.isValid('6206343b86571c574bea69f1'));
-	// true
-	console.log(mongoose.Types.ObjectId.isValid('6206343b86571c574bea69f'));
-	// false
 });
 
 const editTask = asyncWrapper(async (req, res) => {
