@@ -1,348 +1,362 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+	margin: 0;
+	padding: 0;
 }
 
-body{
-    width: 360px;
-    height: 740px;
-    box-shadow: 4px 4px 10px gray;
-    margin: 10% auto;
-    position: relative;
+body {
+	width: 360px;
+	height: 740px;
+	box-shadow: 4px 4px 10px gray;
+	margin: 10% auto;
+	position: relative;
 }
 
 /*-------- TOP HALF -----------*/
 
-.top{
-    height: 50%;
-    width: 100%;
-    background-image: url(https://static.posters.cz/image/1300/image/750/sklenene-obrazy/misty-forest-120x80-cm-i57062.jpg);
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
+.top {
+	height: 50%;
+	width: 100%;
+	background-image: url(https://static.posters.cz/image/1300/image/750/sklenene-obrazy/misty-forest-120x80-cm-i57062.jpg);
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
 }
 
-nav{
-    height: 15%;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
+nav {
+	height: 15%;
+	padding: 0 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-
-.hamburger{
-    height: 15px;
-    width: 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    cursor: pointer;
+.hamburger {
+	height: 15px;
+	width: 20px;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	cursor: pointer;
 }
 
-.line{
-    width: 100%;
-    height: 3px;
-    background-color: black;
+.line {
+	width: 100%;
+	height: 3px;
+	background-color: black;
 }
 
-.fa-bell{
-    font-size: 1.3rem;
-    cursor: pointer;
+.fa-bell {
+	font-size: 1.3rem;
+	cursor: pointer;
 }
 
-.info{
-    margin-top: 80px;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.info {
+	margin-top: 80px;
+	align-self: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.time{
-    color: white;
-    font-size: 55px;
-    text-shadow: 2px 2px 2px black;
+.time {
+	color: white;
+	font-size: 55px;
+	text-shadow: 2px 2px 2px black;
 }
 
 /*---------------CALENDAR--------------*/
 
-.date{
-    color: white;
-    text-shadow: 2px 2px 2px black;
-    font-weight: bolder;
+.date {
+	color: white;
+	text-shadow: 2px 2px 2px black;
+	font-weight: bolder;
 }
 
-.day{
-    font-size: 20px;
-    font-weight: 500;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    text-align: center;
-    position: relative;
-
+.day {
+	font-size: 20px;
+	font-weight: 500;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	text-align: center;
+	position: relative;
 }
 
-.selected-day{
-    padding: 10px 0;
-    cursor: pointer;
-
+.selected-day {
+	padding: 10px 0;
+	cursor: pointer;
 }
 
-.month{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 15px;
-    background-image: linear-gradient(to right, rgba(233, 198, 1, 0.959), rgb(185, 158, 0));
-    border-bottom: 2px solid rgb(185, 158, 0);
+.month {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px;
+	background-image: linear-gradient(
+		to right,
+		rgba(233, 198, 1, 0.959),
+		rgb(185, 158, 0)
+	);
+	border-bottom: 2px solid rgb(185, 158, 0);
 }
 
-.days{
-    background-color: rgb(255, 255, 255);
-    height: 180px;
-    padding: 5px 5px;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-gap: 3px;
+.days {
+	background-color: rgb(255, 255, 255);
+	height: 180px;
+	padding: 5px 5px;
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+	grid-gap: 3px;
 }
 
-.calendar_day{
-    display: flex;
-    justify-content: center;
-    background-color: rgba(245, 245, 245, 0.76);
-    align-items: center;
-    border: 2px solid rgb(185, 158, 0);
-    box-sizing: border-box;
-    cursor: pointer;
+.calendar_day {
+	display: flex;
+	justify-content: center;
+	background-color: rgba(245, 245, 245, 0.76);
+	align-items: center;
+	border: 2px solid rgb(185, 158, 0);
+	box-sizing: border-box;
+	cursor: pointer;
 }
 
-.picked_day{
-    background-image: linear-gradient(to right, rgb(0, 199, 123), rgb(0, 150, 92));
+.picked_day {
+	background-image: linear-gradient(
+		to right,
+		rgb(0, 199, 123),
+		rgb(0, 150, 92)
+	);
 }
 
-.date-picker{
-    position: absolute;
-    width: 100%;
-    top: 43px;
-    display: none;
+.date-picker {
+	position: absolute;
+	width: 100%;
+	top: 43px;
+	display: none;
 }
 
-.prev-month, .next-month{
-    cursor: pointer;
+.prev-month,
+.next-month {
+	cursor: pointer;
 }
 
 /*-------- ADD BUTTON -----------*/
 
-.add, .confirm{
-    position: absolute;
-    padding: 15px 45px;
-    border: none;
-    border-radius: 50px;
-    background-image: linear-gradient(to right, rgba(233, 198, 1, 0.959), rgb(185, 158, 0));
-    color: white;
-    font-size: 15px;
-    font-weight: bolder;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 2px 2px 5px gray;
-    cursor: pointer;
-    z-index: 2;
+.add,
+.confirm {
+	position: absolute;
+	padding: 15px 45px;
+	border: none;
+	border-radius: 50px;
+	background-image: linear-gradient(
+		to right,
+		rgba(233, 198, 1, 0.959),
+		rgb(185, 158, 0)
+	);
+	color: white;
+	font-size: 15px;
+	font-weight: bolder;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: 2px 2px 5px gray;
+	cursor: pointer;
+	z-index: 2;
 }
 
-.add{
-    top: 50%;
+.add {
+	top: 50%;
 }
 
-.add:hover, .confirm:hover{
-    box-shadow: 2px 2px 5px rgb(85, 85, 85);
+.add:hover,
+.confirm:hover {
+	box-shadow: 2px 2px 5px rgb(85, 85, 85);
 }
 
-.confirm{
-    position: absolute;
-    bottom: 10px;
-    background-image: linear-gradient(to right, rgba(0, 155, 96), rgb(0, 102, 63));
-    padding: 15px 52px;
+.confirm {
+	position: absolute;
+	bottom: 10px;
+	background-image: linear-gradient(
+		to right,
+		rgba(0, 155, 96),
+		rgb(0, 102, 63)
+	);
+	padding: 15px 52px;
 }
-
 
 /*-------- BOTTOM HALF -----------*/
 
-
-.bottom{
-    max-height: 46%;
-    width: 100%;
-    overflow: scroll;
-    overflow-x: hidden;
-    scrollbar-width: thin;
-    z-index: 4;
-    position: absolute;
-    top: 54%;
+.bottom {
+	max-height: 46%;
+	width: 100%;
+	overflow: scroll;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+	z-index: 2;
+	position: absolute;
+	top: 54%;
 }
 
 .bottom::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 
-.event{
-    margin-bottom: 10px;
-    margin-top: 5px;
-    box-shadow: 0px 5px 10px -2px gray;
-    display: flex;
-    z-index: 4;
+.event {
+	margin-bottom: 10px;
+	margin-top: 5px;
+	box-shadow: 0px 5px 10px -2px gray;
+	display: flex;
+	z-index: 4;
 }
 
-.description{
-    padding: 10px 20px 10px 45px;
-    width: 100%;
+.description {
+	padding: 10px 20px 10px 45px;
+	width: 100%;
 }
 
-.left_bar{
-    height: 84px;
-    width: 7px;
-    background-color: rgb(0, 155, 96);
-    float: left;
+.left_bar {
+	height: 84px;
+	width: 7px;
+	background-color: rgb(0, 155, 96);
+	float: left;
 }
 
 .event:nth-child(even) .left_bar {
-    background-color: rgba(201, 164, 0, 0.959);
+	background-color: rgba(201, 164, 0, 0.959);
 }
 
-.event_time{
-    position: relative;
-    left: 80%;
-    top: -50%;
-    transform: translateY(50%);
-    font-size: 20px;
-    color: rgb(110, 110, 110);
-    width: 70px;
+.event_time {
+	position: relative;
+	left: 80%;
+	top: -50%;
+	transform: translateY(50%);
+	font-size: 20px;
+	color: rgb(110, 110, 110);
+	width: 70px;
 }
 
-.event_title{
-    transform: translateY(50%);
-    font-size: 19px;
-    font-weight: bolder;
+.event_title {
+	transform: translateY(50%);
+	font-size: 19px;
+	font-weight: bolder;
 }
 
-.event_description{
-    margin-top: 3px;
-    color: rgb(110, 110, 110);
-    transform: translateY(50%);
-    font-size: 14px;
+.event_description {
+	margin-top: 3px;
+	color: rgb(110, 110, 110);
+	transform: translateY(50%);
+	font-size: 14px;
 }
 
-.icons{
-    width: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.icons {
+	width: 45px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
-.event i{
-    position: relative;
-    cursor: pointer;
-    padding: 5px 0px; 
-    transform: translateX(-20%);  
+.event i {
+	position: relative;
+	cursor: pointer;
+	padding: 5px 0px;
+	transform: translateX(-20%);
 }
 
-.fa-edit{
-    color: rgb(0, 122, 0);
+.fa-edit {
+	color: rgb(0, 122, 0);
 }
 
-.fa-ban{
-    color: rgb(161, 0, 0);
+.fa-ban {
+	color: rgb(161, 0, 0);
 }
 
-.fa-edit:hover{
-    color: rgb(0, 162, 0);
+.fa-edit:hover {
+	color: rgb(0, 162, 0);
 }
 
-.fa-ban:hover{
-    color: rgb(201, 0, 0);
+.fa-ban:hover {
+	color: rgb(201, 0, 0);
 }
 
 /*--------SIDE MENU----------*/
 
-.menu{
-    position: relative;
-    height: 100%;
-    width: 0;
-    background-color: rgba(185, 185, 185, 0.918);
-    transition: all linear 150ms;
-    z-index: 3;
+.menu {
+	position: relative;
+	height: 100%;
+	width: 0;
+	background-color: rgba(185, 185, 185, 0.918);
+	transition: all linear 150ms;
+	z-index: 3;
 }
 
-.fa-times{
-    font-size: 1.4rem;
-    position: absolute;
-    right: 10px;
-    top: 14px;
-    opacity: 0;
+.fa-times {
+	font-size: 1.4rem;
+	position: absolute;
+	right: 10px;
+	top: 14px;
+	opacity: 0;
 }
 
 /*-------ADD WINDOW-------*/
 
-.add_window{
-    width: 100%;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
-    position: absolute;
-    top: 0;
-    transition: all ease-out 150ms;
-    transform: translateY(100%);
-    z-index: -1;
-    opacity: 0;
-    display: flex;
-    flex-direction: column;
+.add_window {
+	width: 100%;
+	height: 100%;
+	background-color: rgb(255, 255, 255);
+	position: absolute;
+	top: 0;
+	transition: all ease-out 150ms;
+	transform: translateY(100%);
+	z-index: -1;
+	opacity: 0;
+	display: flex;
+	flex-direction: column;
 }
 
-.input{
-    width: 60%;
-    border: none;
-    border-bottom: 2px gray solid;
-    margin:20px auto;
-    padding-left: 10px;
-    padding-bottom: 3px;   
+.input {
+	width: 60%;
+	border: none;
+	border-bottom: 2px gray solid;
+	margin: 20px auto;
+	padding-left: 10px;
+	padding-bottom: 3px;
 }
 
-.input:first-child{
-    width: 60%;
-    border: none;
-    border-bottom: 2px gray solid;
-    margin:105px auto;
-    margin-bottom: 20px;   
+.input:first-child {
+	width: 60%;
+	border: none;
+	border-bottom: 2px gray solid;
+	margin: 105px auto;
+	margin-bottom: 20px;
 }
 
-::placeholder{
-    font-size: 15px;
+::placeholder {
+	font-size: 15px;
 }
 
 /*------CONFIRM / ERROR MESSAGE -----*/
-.message{
-    height: 40px;
-    width: 80%;
-    background-color: khaki;
-    margin: 23px auto;  
-    margin-bottom: 22px; 
-    font-size: 17px;
-    font-weight: bolder;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.message {
+	height: 40px;
+	width: 80%;
+	background-color: khaki;
+	margin: 23px auto;
+	margin-bottom: 22px;
+	font-size: 17px;
+	font-weight: bolder;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.message_error{
-    background-color: red;
+.message_error {
+	background-color: red;
 }
 
-.message_confirm{
-    background-color: rgb(0, 162, 0);
+.message_confirm {
+	background-color: rgb(0, 162, 0);
 }

@@ -1,69 +1,58 @@
 const Task = require('../models/Task');
+const asyncWrapper = require('../middleware/async');
+const { createCustomError } = require('../errors/custom-error');
+const mongoose = require('mongoose');
 
-const getAllTasks = async (req, res) => {
-  try {
-    const tasks = await Task.find({});
-    res.status(200).json({ tasks });
-  } catch (error) {
-    res.status(500).json({ msg: error });
-  }
-};
+const getAllTasks = asyncWrapper(async (req, res) => {
+	const tasks = await Task.find({});
+	res.status(201).json({ tasks });
+});
 
-const addTask = async (req, res) => {
-  try {
-    const task = await Task.create(req.body);
-    res.status(201).json({ task });
-  } catch (error) {
-    res.status(500).json({ msg: error });
-  }
-};
+const addTask = asyncWrapper(async (req, res) => {
+	const task = await Task.create(req.body);
+	res.status(201).json({ task });
+});
 
-const getSingleTask = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const task = await Task.findById(id);
+const getSingleTask = asyncWrapper(async (req, res, next) => {
+	const id = req.params.id;
+	const task = await Task.findById(id);
+	//const task = await Task.findById(id);
 
-    if (!task) {
-      return res.status(404).json({ msg: `there is no item with id: ${id}` });
-    }
+	if (!task) {
+		return next(createCustomError(`there is no item with id: ${id}`, 404));
+	}
 
-    res.status(200).json({ task });
-  } catch (error) {
-    res.status(500).json({ msg: error });
-  }
-};
+	res.status(200).json({ task });
 
-const editTask = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const task = await Task.findOneAndUpdate({ _id: id }, req.body, {
-      new: true,
-      runValidators: true,
-    });
+	console.log(mongoose.Types.ObjectId.isValid('6206343b86571c574bea69f1'));
+	// true
+	console.log(mongoose.Types.ObjectId.isValid('6206343b86571c574bea69f'));
+	// false
+});
 
-    if (!task) {
-      return res.status(404).json({ msg: `there is no item with id: ${id}` });
-    }
+const editTask = asyncWrapper(async (req, res) => {
+	const id = req.params.id;
+	const task = await Task.findOneAndUpdate({ _id: id }, req.body, {
+		new: true,
+		runValidators: true,
+	});
 
-    res.status(200).json({ task });
-  } catch (error) {
-    res.status(500).json({ msg: error });
-  }
-};
+	if (!task) {
+		return next(createCustomError(`there is no item with id: ${id}`, 404));
+	}
 
-const deleteTask = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const task = await Task.findOneAndRemove({ _id: id });
+	res.status(200).json({ task });
+});
 
-    if (!task) {
-      return res.status(404).json({ msg: `there is no item with id: ${id}` });
-    }
+const deleteTask = asyncWrapper(async (req, res) => {
+	const id = req.params.id;
+	const task = await Task.findOneAndRemove({ _id: id });
 
-    res.status(200).json({ task });
-  } catch (error) {
-    res.status(500).json({ msg: error });
-  }
-};
+	if (!task) {
+		return next(createCustomError(`there is no item with id: ${id}`, 404));
+	}
+
+	res.status(200).json({ task });
+});
 
 module.exports = { getAllTasks, addTask, getSingleTask, editTask, deleteTask };
