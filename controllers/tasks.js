@@ -17,9 +17,9 @@ const getSingleTask = asyncWrapper(async (req, res, next) => {
 	const id = req.params.id;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res
-			.status(500)
-			.json({ msg: 'Something went wrong, tray again later' });
+		return next(
+			createCustomError(`Something went wrong, try again later`, 500)
+		);
 	}
 
 	const task = await Task.findById(id);
